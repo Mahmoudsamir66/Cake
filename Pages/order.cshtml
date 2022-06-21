@@ -1,0 +1,93 @@
+﻿@page "{id:int}"
+@model Cake.Pages.orderModel
+@{
+	ViewData["title"] = "Place Your Order";
+
+	
+}
+<h1>welcome mahmoud samir</h1>
+
+<ol id="orderProcess">
+	    </li>
+		<span class="step-number">1</span>Choose Item
+		</li>
+		<li class="current">
+		<span class="step-number" >2</span>Details and submit
+		</li>
+		<li>
+		<span class="step-number">3</span>Recipt
+	    </li>
+
+</ol>
+
+<form method="post">
+<div class="row">
+
+	<div class="col-sm-4">
+    <img src="~/Images/@Model.product.image" class="img-fluid-rounded "  />
+
+	</div>
+
+	<div class="col-sm-8">
+      <ul class="orderPageList" data-role="listview">
+		  <li>
+			  <div>
+				  <p class="decreption">@Model.product.description</p>
+			  </div>
+		  </li>
+		  <li class="email">
+			  <div class="form-group">
+                 <label asp-for="Email"></label>
+				 <input asp-for="Email" class="form-control form-control-sm" />
+				 <span asp-validation-for="Email"></span>
+			  </div>
+		  </li>
+		  <li class="Shipping">
+			  <div class="form-group">
+                 <label asp-for="Shipping"></label>
+				 <textarea asp-for="Shipping" class="form-control form-control-sm" /></textarea>
+				 <span asp-validation-for="Shipping"></span>
+			  </div>
+		  </li>
+		  <li class="Quantity">
+			   <div class="form-group">
+                 <label asp-for="Quantity"></label>
+				 <input asp-for="Quantity" class="form-control form-control-sm" />
+				 x
+				 <span class="order-calc" id="orderPrice">@Model.product.price.ToString("f")</span>
+				 =
+				 <span class="order-calc" id="orderTotal">@Model.product.price.ToString("f")</span>
+				 <span asp-validation-for="Quantity"></span>
+			  </div>
+		  </li>
+
+		  <p class="actions">
+			  @*<input type="hidden" asp-for="product.id"/>*@
+			  <button class="btn btn-danger order-button">Place Order</button>
+		  </p>
+	  </ul>
+	</div>
+
+</div>
+
+</form>
+@section scripts{
+	<script type="text/javascript">
+$(function() {
+    var price = parseFloat($("#orderPrice").text()).toFixed(2),
+	    total=$("#orderTotal"),
+        quantity = $("#orderQuantity");	 
+    quantity.on('change', function() {
+        var Qty = parseFloat(quantity.val());
+        if (!Qty || Qty < 1) {
+            quantity.val(1);
+            quantity =1;
+        }
+        else if (Qty.toString() !== quantity.val()) {
+            quantity.val(Qty);
+        }
+        total.text("$" + (price * quantity).toFixed(2))
+    });
+});
+	</script>
+}

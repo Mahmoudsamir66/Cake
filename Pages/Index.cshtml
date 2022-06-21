@@ -1,0 +1,65 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row" id="featured">
+  <div class="col-sm-6">
+      <img src="~/Images/@Model.productFeatured.image" class="img-fluid-rounded"/>
+
+  </div>
+  <div id="prductDescription" class="col-sm-6">
+     <div id="featured" >
+         <h1>product title is @Model.productFeatured.name</h1>
+         <p id="price">
+             $@string.Format("{0:f}",Model.productFeatured.price)
+         </p>
+         <p id="description">
+             the description is @Model.productFeatured.description
+         </p>
+
+     </div>
+     <div id="callToAction">
+         
+        <a asp-page="/order"
+        class="btn btn-danger order-button"
+        title="order @Model.productFeatured.name"
+        asp-route-id="@Model.productFeatured.id">order Now</a>
+    </div>
+  </div>
+
+</div>
+<div class="row" id="productWrapper">
+ @foreach (var product in Model.products)
+{<div class="col-sm-3">
+    <a asp-page="/order"
+        
+        title="order @product.name"
+        asp-route-id="@product.id">
+    <div class="productInfo">
+        <h3>@product.name</h3>
+       <img src="~/Images/@product.image" class="img-fluid-rounded"/>
+   <p id="description">
+             the description is @product.description
+         </p>     
+   </div>
+             
+         </a>
+         <div class="action">
+         <p id="price">
+             $@string.Format("{0:f}",product.price)
+         </p>
+        <a asp-page="/order"
+        class="btn btn-danger order-button"
+        title="order @product.name"
+        asp-route-id="@product.id">order Now</a>
+    </div>
+    </div>
+   
+};
+ 
+</div>
+
+
+
